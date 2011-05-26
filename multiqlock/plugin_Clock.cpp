@@ -64,19 +64,22 @@ void setClockMinutes(int minutes) {
   case 0:
     break;
   case 1:
-    setMatrixOr(2, 0b0000000000010000); // 1
+    setMatrixOr(1, 0b0000000000010000); // 1
     break;
   case 2:
-    setMatrixOr(2, 0b0000000000011000); // 1 + 2
+    setMatrixOr(1, 0b0000000000010000); // 1
+    setMatrixOr(0, 0b0000000000001000); // 2
     break;
   case 3:
-    setMatrixOr(2, 0b0000000000011000); // 1 + 2
+    setMatrixOr(1, 0b0000000000010000); // 1
+    setMatrixOr(0, 0b0000000000001000); // 2
     setMatrixOr(3, 0b0000000000000100); // 3
     break;
   case 4:
-    setMatrixOr(2, 0b0000000000011000); // 1 + 2
-    setMatrixOr(3, 0b0000000000000100); // 3
-    setMatrixOr(2, 0b0000000000000010); // 4
+    setMatrixOr(1, 0b0000000000010000); // 1  
+    setMatrixOr(0, 0b0000000000001000); // 2  
+    setMatrixOr(3, 0b0000000000000100); // 3  
+    setMatrixOr(2, 0b0000000000000010); // 4 
     break;
   }
 }
