@@ -15,6 +15,7 @@
  * V 1.3  - Fehler im samplesOk() behoben.
  */
 #include "DCF77Helper.h"
+#include "Global.h"
 
 // #define DEBUG
 

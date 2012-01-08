@@ -10,11 +10,15 @@
 #ifndef BLANK_H
 #define BLANK_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showBlank();
-void initBlank(int x, int y);
+void initBlank();
 void updateBlank(int timeDiff);
 void buttonBlank(Button btn, byte id);
 

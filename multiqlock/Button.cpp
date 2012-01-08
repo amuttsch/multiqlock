@@ -8,8 +8,7 @@
  * @datum    18.2.2011
  */
 #include "Button.h"
-
-// #define DEBUG
+#include "Global.h"
 
 #define BUTTON_TRESHOLD 200
 
@@ -20,6 +19,10 @@ Button::Button(int pin) {
   _pin = pin;
   _lastPressTime = 0;
   pinMode(_pin, INPUT);
+  
+  #if INTERNAL_BUTTON_PULLUP
+    digitalWrite(_pin, HIGH);
+  #endif  
 }
 
 /**
@@ -28,7 +31,7 @@ Button::Button(int pin) {
 boolean Button::pressed() {
   boolean retVal = false;
 
-  if (digitalRead(_pin) == HIGH) {
+  if (digitalRead(_pin) == BUTTON_PRESSED) {
     if (_lastPressTime + BUTTON_TRESHOLD < millis()) {
       retVal = true;
       _lastPressTime = millis();

@@ -9,16 +9,11 @@
  */
 #include "plugin_All.h"
 #include "DisplayMatrix.h"
-
-int All_matrixX;
-int All_matrixY;
+#include "Global.h"
 
 // Initialisierung
-void initAll(int x, int y)
+void initAll()
 {
-  All_matrixX = x;
-  All_matrixY = y;
-  
   return;
 }
 
@@ -32,8 +27,7 @@ void updateAll(int timeDiff)
 void showAll()
 { 
   clearMatrix();
-  byte matrixSize = getMatrixSize(); 
-  for (int i = 0; i < matrixSize; i++) 
+  for (int i = 0; i < MATRIX_ROWS; i++) 
   {
     setMatrix(i, 65535);
   }

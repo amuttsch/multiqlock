@@ -17,10 +17,14 @@
 #ifndef DCF77HELPER_H
 #define DCF77HELPER_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "DS1307.h"
 #include "MyDCF77.h"
-#include "TimeSTamp.h"
+#include "TimeStamp.h"
 
 // Wieviele Samples muessen stimmen, damit das DCF77-Telegramm als gueltig zaehlt?
 #define DCF77HELPER_MAX_SAMPLES 4

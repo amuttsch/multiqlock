@@ -1,0 +1,88 @@
+Changelog:
+1.1:
+- DCF77 auf reine Zeit ohne Strings umgestellt.
+- Ganzes Datum wird in die DS1307 geschrieben.
+
+1.2:
+- Schnelles Schreiben der Shift-Register eingefuehrt.
+
+1.3:
+- Auf eigene DCF77-Bibliothek umgestellt (MyDCF77) und DCF77Helper verbessert.
+
+1.4:
+- Glimmen/Nachleuchten dank Tipp von Volker beseitigt (http://www.mikrocontroller.net/topic/209988).
+- Erneute Fehlerbereinigung in der DCF77-Bibliothek.
+
+1.5:
+- Die Helligkeit laesst sich ueber die Variable 'brightness' einstellen (Bereich 1-9) bzw. ueber den Compiler-Schalter 'ENABLE_LDR' einschalten.
+
+1.6:
+- Fehler in der DCF77Helper-Bibliothek behoben.
+
+2.0:
+- Komplette Umstrukturierung des Programms auf Modulbasis
+
+2.1:
+- Weitere Auslagerungen in Headerdateien; Temperatursensor; Updateintervall pro Plugin einstellbar:
+  Nur gefüllte Zeilen schreiben; Letzten Modus in EEPROM schreiben (define SAVEMODE)
+ 
+2.2:
+- Temperatursensor
+- Weitere Codeoptimierungen
+
+2.2.1:
+- Fixed Issue 1: plugin_Temperature.cpp
+  Fehlerhaftes Errechnen der Temperatur
+
+  
+2.3 Beta 1
+Features:
+- 1. Teil vom Merge mit der Qlock23_V1_0 (Einstellung für Helligkeit fehlt)
+- Merge mit der QlockThree 1.9
+- Global.h für Einstellungen
+- Defines für Eck-LEDs
+- Neue Einstellung: Globales Debugflag
+- Neue Einstellung: Anzeige DREIVIERTEL oder VIERTEL VOR bzw VIERTEL oder VIERTEL NACH
+- Neue Einstellung: Letzten Modus speichern
+- Neue Einstellung: Hardwarelayout (Original / Eberhard)
+
+Bugfixes:
+- Beim Moduswechsel wird nun ein Update des neuen Plugins erzwungen
+- Anpassung Wert für Temperaturberechnung. (Danke Chris -> http://groups.google.com/group/qlocktwo/browse_thread/thread/c7d67b1f5aa9cdee)
+- Pins für die Buttons sind nun auch in der Pins.h hinterlegt
+
+Misc:
+- Parameter für Matrix-Größe durch ein DEFINE in Global.h abgelöst -> Mehr Speicher verfügbar
+
+
+2.3 Beta 2
+Features:
+- Unterstützung Arduino 1.0 (Wire.read und write) sowie WProgram.h Anpassungen
+- Merge mit QlockThree 1.9.1
+- Merge mit Qlock23_V1_1
+
+Bugfixes:
+- Doppeltes Define für die VIERTEL VOR Anzeige korrigiert (Issue 4)
+- Die Stunden werden in der DREIVIERTEL Anzeige nun korrekt dargestellt (Issue 4)
+- SAVEMODE korrigiert (Issue 3)
+
+
+2.3 Final
+Features:
+- Codeoptimierung
+- 2. Teil des Merges von Qlock23_V1_1 (Einstellung für die Helligkeit)
+
+Bugfixes:
+- plugin_Scramble hat geflackert und die LEDs nicht korrekt angesteuert
+
+2.3.1
+Features: 
+- DE_AT / DE_DE in Global.h setzbar (thx @ Bernhard Göberndorfer)
+- neues Plugin: Analoguhr (thx @ Bernhard Göberndorfer)
+- Neues Define für Versionsnummer
+- Modus über seriellen Port wechselbar ("m" senden)
+
+Bugfixes:
+- Nach dem Aufruf von SetLDRxx konnte es passieren, dass die Anzeige dunkel blieb
+- Serielle Ausgaben im SetLDR korrigiert
+

@@ -9,21 +9,35 @@
  */
 #include "plugin_BinaryClock.h"
 #include "ClockHandler.h"
-#include "Helper.h"
 #include "DisplayMatrix.h"
+#include "Global.h"
 
-int Binary_matrixX;
-int Binary_matrixY;
 byte Binary_hours;
 byte Binary_min;
 byte Binary_sec;
 
-// Initialisierung der BinärUhr
-void initBinary(int x, int y)
+/**
+ * Reihenfolge der Bits in einem Byte umkehren
+ */
+byte swapBits(byte x_input)
 {
-  Binary_matrixX = x;
-  Binary_matrixY = y;
+  byte tmp = x_input;
+  int s = sizeof(x_input) * 8 - 1;
   
+  for (x_input >>= 1; x_input; x_input >>= 1)
+  {   
+    tmp <<= 1;
+    tmp |= x_input & 1;
+    s--;
+  }
+  tmp <<= s;
+  
+  return tmp;
+}
+
+// Initialisierung der BinärUhr
+void initBinary()
+{
   return;
 }
 
@@ -36,6 +50,20 @@ void updateBinary(int timeDiff)
   Binary_sec = getSeconds();
 
   return;
+}
+
+// Rahmen malen
+void paintBoarder()
+{
+  // Rahmen
+  // Oben
+  writeLine(0, 0, MATRIX_COLUMNS - 1, 0);
+  // Unten
+  writeLine(0, MATRIX_ROWS - 1, MATRIX_COLUMNS - 1, MATRIX_ROWS - 1);
+  // Links -> Die schon gezeichneten LEDs werden übersprungen
+  writeLine(0, 1, 0, MATRIX_ROWS - 2);
+  // Rechts -> Die schon gezeichneten LEDs werden übersprungen
+  writeLine(MATRIX_COLUMNS - 1, 1, MATRIX_COLUMNS - 1, MATRIX_ROWS - 2);
 }
 
 // Anzeigefunktion der BinärUhr Hochformat
@@ -54,14 +82,7 @@ void showBinary2()
   clearMatrix();
   
   // Rahmen
-  // Oben
-  writeLine(0, 0, Binary_matrixX - 1, 0);
-  // Unten
-  writeLine(0, Binary_matrixY - 1, Binary_matrixX - 1, Binary_matrixY - 1);
-  // Links -> Die schon gezeichneten LEDs werden übersprungen
-  writeLine(0, 1, 0, Binary_matrixY - 2);
-  // Rechts -> Die schon gezeichneten LEDs werden übersprungen
-  writeLine(Binary_matrixX - 1, 1, Binary_matrixX - 1, Binary_matrixY - 2);
+  paintBoarder();
   
   tmpBit=1;
   for(int i=0;i<8;i++)
@@ -92,14 +113,7 @@ void showBinary()
   setMatrix(6, swapBits(Binary_sec) << 6);
         
   // Rahmen
-  // Oben
-  writeLine(0, 0, Binary_matrixX - 1, 0);
-  // Unten
-  writeLine(0, Binary_matrixY - 1, Binary_matrixX - 1, Binary_matrixY - 1);
-  // Links -> Die schon gezeichneten LEDs werden übersprungen
-  writeLine(0, 1, 0, Binary_matrixY - 2);
-  // Rechts -> Die schon gezeichneten LEDs werden übersprungen
-  writeLine(Binary_matrixX - 1, 1, Binary_matrixX - 1, Binary_matrixY - 2);
+  paintBoarder();
   
   writeMatrix();  
   

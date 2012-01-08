@@ -10,6 +10,7 @@
 
 #include "plugin_Pong.h"
 #include "DisplayMatrix.h"
+#include "Global.h"
 
 #define PADDLEWIDTH 4
 
@@ -61,11 +62,11 @@ Pong_Hit PongCheckHit(int x, int y)
   {
     return HIT_UP;
   }
-  if(x > pong.xScreenMax - 1)
+  if(x > MATRIX_COLUMNS - 1)
   {
     return HIT_RIGHT;
   }
-  if(y > pong.yScreenMax - 1)
+  if(y > MATRIX_ROWS - 1)
   {
     return HIT_DOWN;
   }
@@ -114,13 +115,13 @@ void PongMovePaddles(int ballX, int ballY)
 
   // Die Paddles dürfen natürlich nicht über den Bildschirmrand reichen
   // Prüfung rechte Seite
-  if(pong.paddleUp.posX + PADDLEWIDTH > pong.xScreenMax - 1)
+  if(pong.paddleUp.posX + PADDLEWIDTH > MATRIX_COLUMNS - 1)
   {
-    pong.paddleUp.posX = pong.xScreenMax - PADDLEWIDTH;
+    pong.paddleUp.posX = MATRIX_COLUMNS - PADDLEWIDTH;
   }
-  if(pong.paddleDown.posX + PADDLEWIDTH > pong.xScreenMax - 1)
+  if(pong.paddleDown.posX + PADDLEWIDTH > MATRIX_COLUMNS - 1)
   {
-    pong.paddleDown.posX = pong.xScreenMax - PADDLEWIDTH;
+    pong.paddleDown.posX = MATRIX_COLUMNS - PADDLEWIDTH;
   }
 
   // Prüfung linke Seite
@@ -248,25 +249,21 @@ void updatePong(int x_timeDiff)
 }
 
 // Initialisieren des Pong Spiels
-void initPong(int x, int y)
+void initPong()
 {
   memset(&pong, 0, sizeof(pong));
   
-  // Abmessungen des Bildschirms übernehmen
-  pong.xScreenMax = x;
-  pong.yScreenMax = y;
-  
   // Oberes Paddle startet in der Mitte
-  pong.paddleUp.posX = pong.xScreenMax / 2  - (PADDLEWIDTH / 2);
+  pong.paddleUp.posX = MATRIX_COLUMNS / 2  - (PADDLEWIDTH / 2);
   pong.paddleUp.posY = 0;
 
   // Unteres Paddle startet ebenfalls in der Mitte
-  pong.paddleDown.posX = pong.xScreenMax / 2 - (PADDLEWIDTH / 2);
-  pong.paddleDown.posY = pong.yScreenMax - 1;
+  pong.paddleDown.posX = MATRIX_COLUMNS / 2 - (PADDLEWIDTH / 2);
+  pong.paddleDown.posY = MATRIX_ROWS - 1;
   
   // Der Ball startet in der Mitte, Richtung zufällig
-  pong.ball.posX = (pong.xScreenMax / 2);
-  pong.ball.posY = (pong.yScreenMax / 2) - 1;
+  pong.ball.posX = (MATRIX_COLUMNS / 2);
+  pong.ball.posY = (MATRIX_ROWS / 2) - 1;
   pong.ball.speed = 1;
   pong.ball.angle = random(0, 6);
   

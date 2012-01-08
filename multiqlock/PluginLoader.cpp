@@ -8,14 +8,13 @@
  * @datum    21.3.2011
  */
 
-// #define DEBUG
-
 #include "PluginLoader.h"
+#include "Global.h"
 
 // Functionpointer für die pluginVerwaltung
 typedef struct s_pluginPointer
 {
-  void (*initPtr)(int x, int y);
+  void (*initPtr)();
   void (*updatePtr)(int timeDiff);
   void (*showPtr)();
   void (*buttonPtr)(Button btn, byte id);
@@ -29,11 +28,14 @@ s_pluginPointer *pluginPointer;
 // Variablen für FramerateErtmittlung
 int lastMillis = 0;
 
+// Soll ein Update erzwungen werden?
+boolean forceUpdate;
+
 /***
  * Pluginverwaltung
  * Hier sind die Funktionen, die für das Registrieren und Ausführen der der Plugins notwendig sind
  */
-void registerPlugin(void (*x_initPtr)(int x, int y), void (*x_updatePtr)(int timeDiff), void (*x_showPtr)(), void (*x_buttonPtr)(Button btn, byte id), int x_updateInterval)
+void registerPlugin(void (*x_initPtr)(), void (*x_updatePtr)(int timeDiff), void (*x_showPtr)(), void (*x_buttonPtr)(Button btn, byte id), int x_updateInterval)
 {
   pluginPointer = (s_pluginPointer *) realloc(pluginPointer, (pluginCount + 1) * sizeof(s_pluginPointer));
   pluginPointer[pluginCount].initPtr   = x_initPtr;
@@ -48,15 +50,16 @@ void registerPlugin(void (*x_initPtr)(int x, int y), void (*x_updatePtr)(int tim
   return;
 }
 
-void callPluginInit(int x, int y)
+void callPluginInit()
 {
   int i = 0;
   for (i=0;i<pluginCount;i++)
   {
-    pluginPointer[i].initPtr(x, y);
+    pluginPointer[i].initPtr();
   }
   
   lastMillis = 0;
+  forceUpdate = false;
   
   return;
 }
@@ -65,10 +68,11 @@ void callPluginUpdate(int mode)
 {
   // Get the FrameRate
   int currentMillis = millis();
-  if (currentMillis - lastMillis > pluginPointer[mode].updateInterval)
+  if (currentMillis - lastMillis > pluginPointer[mode].updateInterval || forceUpdate)
   {
     pluginPointer[mode].updatePtr(currentMillis-lastMillis);
-    lastMillis=currentMillis;
+    lastMillis  = currentMillis;
+    forceUpdate = false;
   }
   return;
 }
@@ -86,4 +90,9 @@ void callPluginButton(int mode, Button btn, byte id)
 int getPluginCount()
 {
   return pluginCount;
+}
+
+void forcePluginUpdate()
+{
+  forceUpdate = true;
 }

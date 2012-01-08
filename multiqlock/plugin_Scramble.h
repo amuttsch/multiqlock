@@ -1,6 +1,6 @@
 /**
  * Scramble.cpp
- * LEDs zufällig leuchten lassen
+ * LEDs zufï¿½llig leuchten lassen
  *
  * @mc       Arduino/RBBB
  * @autor    Andreas Muttscheller / Benedikt Gerlich
@@ -10,11 +10,15 @@
 #ifndef SCRAMBLE_H
 #define SCRAMBLE_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showScramble();
-void initScramble(int x, int y);
+void initScramble();
 void updateScramble(int timeDiff);
 void buttonScramble(Button btn, byte id);
 

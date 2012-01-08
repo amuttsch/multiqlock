@@ -8,11 +8,12 @@
  *
  * @mc       Arduino/RBBB
  * @autor    Christian Aschoff / caschoff _AT_ mac _DOT_ com
- * @version  1.1
- * @datum    2.3.2011
+ * @version  1.1.1
+ * @datum    1.11.2011
  *
  * Versionshistorie:
  * V 1.1:  - Fehler in der Array-Laenge und in toString() behoben.
+ * V 1.1.1: - signal() public gemacht.
  */
 #ifndef MYDCF77_H
 #define MYDCF77_H
@@ -20,7 +21,7 @@
 // Bei einer Verwendung eines analogen Pins die
 // naechsten zwei Zeilen einkommentieren.
 // #define MyDCF77_SIGNAL_IS_ANALOG
-// #define MyDCF77_ANALOG_SIGNAL_TRESHOLD 800
+// #define MyDCF77_ANALOG_SIGNAL_TRESHOLD 600
 
 // Als Synchronisierungs-Marke wird eine Pause von 1 Sekunde laenge 
 // 'gesendet'. Allerdings haben wir ja vorher noch eine Absenkung vom 
@@ -30,13 +31,18 @@
 #define MYDCF77_100MS_TRESHOLD 90
 #define MYDCF77_TELEGRAMMLAENGE 59
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 
 class MyDCF77 {
 public:
   MyDCF77(int signalPin);
 
   boolean poll();
+  boolean signal();
 
   int getMinutes();
   int getHours();
@@ -64,7 +70,6 @@ private:
   byte _bits[MYDCF77_TELEGRAMMLAENGE];
   int _bitsPointer;
 
-  boolean signal();
   boolean decode();
 
   // Hilfsvariablen fuer den Zustandsautomaten

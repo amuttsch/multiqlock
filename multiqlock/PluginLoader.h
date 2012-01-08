@@ -1,6 +1,6 @@
 /**
  * pluginLoader.h
- * Funktionen für den Aufruf einzelner Plugins
+ * Funktionen fï¿½r den Aufruf einzelner Plugins
  *
  * @mc       Arduino/RBBB
  * @autor    Andreas Muttscheller
@@ -10,15 +10,20 @@
 #ifndef PLUGINLOADER_H
 #define PLUGINLOADER_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
-void registerPlugin(void (*x_initPtr)(int x, int y), void (*x_updatePtr)(int timeDiff), void (*x_showPtr)(), void (*x_buttonPtr)(Button btn, byte id), int x_updateInterval);
-void callPluginInit(int x, int y);
+void registerPlugin(void (*x_initPtr)(), void (*x_updatePtr)(int timeDiff), void (*x_showPtr)(), void (*x_buttonPtr)(Button btn, byte id), int x_updateInterval);
+void callPluginInit();
 void callPluginUpdate(int mode);
 void callPluginShow(int mode);
 void callPluginButton(int mode, Button btn, byte id);
 int getPluginCount();
+void forcePluginUpdate();
 
 #endif
 

@@ -11,8 +11,7 @@
  * V 1.1:  - Feher in toString() behoben.
  */
 #include "TimeStamp.h"
-
-// #define DEBUG
+#include "Global.h"
 
 TimeStamp::TimeStamp() {
 }
@@ -57,18 +56,18 @@ void TimeStamp::setFrom(MyDCF77 dcf77){
   _minutes = dcf77.getMinutes();
   _hours = dcf77.getHours();
   _date = dcf77.getDate();
-  _dayOfWeek = dcf77.getDayOfWeek();
-  _month=dcf77.getMonth();
-  _year=dcf77.getYear();
+  //_dayOfWeek = dcf77.getDayOfWeek();
+  //_month=dcf77.getMonth();
+  //_year=dcf77.getYear();
 }
 
 void TimeStamp::setFrom(DS1307 ds1307){
   _minutes = ds1307.getMinutes();
   _hours = ds1307.getHours();
   _date = ds1307.getDate();
-  _dayOfWeek = ds1307.getDayOfWeek();
-  _month=ds1307.getMonth();
-  _year=ds1307.getYear();
+  //_dayOfWeek = ds1307.getDayOfWeek();
+  //_month=ds1307.getMonth();
+  //_year=ds1307.getYear();
 }
 
 void TimeStamp::set(int minutes, int hours, int date, int dayOfWeek, int month, int year){

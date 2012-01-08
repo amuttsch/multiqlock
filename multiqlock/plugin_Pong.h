@@ -10,7 +10,11 @@
 #ifndef PONG_H
 #define PONG_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 // Anzeige jeden Frame
@@ -20,7 +24,7 @@ void showPong();
 void updatePong(int timeDiff);
 
 // Initialisieren von Pong
-void initPong(int x, int y);
+void initPong();
 
 // Button abfragen
 void buttonPong(Button btn, byte id);

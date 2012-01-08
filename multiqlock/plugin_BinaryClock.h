@@ -10,12 +10,16 @@
 #ifndef BINARYCLOCK_H
 #define BINARYCLOCK_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showBinary();
 void showBinary2();
-void initBinary(int x, int y);
+void initBinary();
 void updateBinary(int timeDiff);
 void buttonBinary(Button btn, byte id);
 

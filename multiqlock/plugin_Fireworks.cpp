@@ -8,6 +8,7 @@
  * @datum    18.3.2011
  */
 #include "plugin_Fireworks.h"
+#include "Global.h"
 #include "DisplayMatrix.h"
 
 // Die Feuerwerksstatusdefinitionen
@@ -19,9 +20,6 @@
 
 #define MAXCLASSES 3
 
-// H�he und Breite der Matrix
-int Fireworks_matrixX;
-int Fireworks_matrixY;
 int Fireworks_randomClasses;
 
 // Fireworks Klassen
@@ -31,17 +29,14 @@ boolean Fireworks_alldone;
 
 // Diese Funktionen werden von der QlockThree aufgerufen.
 // Nun werden die eigentlichen Funktionen f�r alle Objekte aufgerufen
-void initFireworks(int x, int y)
+void initFireworks()
 {
 	int i;
-	
-	Fireworks_matrixX = x;
-	Fireworks_matrixY = y;
 	
 	// die Klassen erstellen
 	for (i=0;i<MAXCLASSES;i++)
 	{
-		cFireworks[i].initFireworks(x, y);
+		cFireworks[i].initFireworks();
 	}
 	
 	Fireworks_alldone = false;
@@ -103,7 +98,7 @@ void buttonFireworks(Button btn, byte id)
 // Classenfunktionen
 //********************************************************************************************
 
-void classFirework::initFireworks(int x, int y)
+void classFirework::initFireworks()
 {	
 	memset(&firework, 0, sizeof(firework));
 	firework.status = NEW;
@@ -121,18 +116,6 @@ void classFirework::resetStatus()
   memset(&firework, 0, sizeof(firework));
 	firework.status = NEW;
 	done = false;
-}
-
-boolean classFirework::validateXY(int x, int y)
-{
-	if (x < 0 || x > (Fireworks_matrixX - 1) || y < 0 || y > (Fireworks_matrixY - 1))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
 }
 
 boolean classFirework::getMatrixShow(int x, int y)
@@ -180,7 +163,7 @@ void classFirework::initializeFirework()
 	do
 	{
 		usable = true;
-		firework.x = random(0, Fireworks_matrixX);
+		firework.x = random(0, MATRIX_COLUMNS);
 		for (i=0;i<Fireworks_randomClasses;i++)
 		{
 			if (classX[i] == firework.x)
@@ -193,10 +176,10 @@ void classFirework::initializeFirework()
 	
 	// Die H�he ermitteln, da die Rakete nicht direkt am Anfang explodieren soll,
 	// -4 Rechnen. D.h. die Rakete explodiert erst ab der 3. Reihe
-	firework.explosionY = random(0, Fireworks_matrixY - 3);
+	firework.explosionY = random(0, MATRIX_ROWS - 3);
 	
 	// die H�he ist am Anfang immer die unterste Zeile
-	firework.y = Fireworks_matrixY - 1;
+	firework.y = MATRIX_ROWS - 1;
 	
 	firework.explosionCount  = 0;
         // Radius!

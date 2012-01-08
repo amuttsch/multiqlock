@@ -10,11 +10,15 @@
 #ifndef SECONDS_H
 #define SECONDS_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showSeconds();
-void initSeconds(int x, int y);
+void initSeconds();
 void updateSeconds(int timeDiff);
 void buttonSeconds(Button btn, byte id);
 

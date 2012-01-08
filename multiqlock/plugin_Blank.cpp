@@ -9,16 +9,11 @@
  */
 #include "plugin_Blank.h"
 #include "DisplayMatrix.h"
-
-int Blank_matrixX;
-int Blank_matrixY;
+#include "Global.h"
 
 // Initialisierung
-void initBlank(int x, int y)
+void initBlank()
 {
-  Blank_matrixX = x;
-  Blank_matrixY = y;
-  
   return;
 }
 

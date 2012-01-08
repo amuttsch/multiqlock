@@ -11,11 +11,14 @@
 #ifndef FIREWORKS_H
 #define FIREWORKS_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
-void setLED(int x, int y);
-void initFireworks(int x, int y);
+void initFireworks();
 void updateFireworks(int timeDiff);
 void showFireworks();
 void buttonFireworks(Button btn, byte id);
@@ -23,7 +26,7 @@ void buttonFireworks(Button btn, byte id);
 class classFirework {
 public:
 	boolean done;
-	void initFireworks(int x, int y);
+	void initFireworks();
 	void updateFireworks(int timeDiff);
 	void showFireworks();
 	int getX();
@@ -34,9 +37,9 @@ private:
 	typedef struct s_firework
 	{
 		int status; // 0=neu 1=fliegt, 2=explodiert, 9=fertig
-		int explosionY; // H�he, in der die Rakete explodieren soll
-		int y; // aktuelle H�he
+    int y; // aktuelle H�he
 		int x;  // aktuelle Breite
+		int explosionY; // H�he, in der die Rakete explodieren soll
 		int explosionCount; // wie oft waren wir in der Explosions-Funktion?
 		int maxExplosion; // Maximaler Explosionsradius (erstmal fix)
     int startOffset;
@@ -46,8 +49,6 @@ private:
 	s_firework firework;
 
 	boolean intMatrix[11][10];
-	
-	boolean validateXY(int x, int y);
   boolean getMatrixShow(int x, int y);
   void setMatrixShow(int x, int y);
 	void initializeFirework();

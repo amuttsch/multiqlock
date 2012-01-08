@@ -9,6 +9,9 @@
  */
 #ifndef PINS_H
 #define PINS_H
+
+#include "Global.h"
+
 /**
  * Das Rechtecksignal der RTC fuer den Interrupt
  */
@@ -18,11 +21,29 @@
 #define dcf77Led          8
 #define dcf77Signal       9
 
+#ifdef LAYOUT_ORIGINAL
+  #define PinLatch          11
+  #define PinClock          12
+  #define PinData           10
+#endif
+
+// LAYOUT_EBERHARD
+#ifdef LAYOUT_EBERHARD
+  #define PinLatch          10
+  #define PinClock          13
+  #define PinData           11
+#endif
+
 // Der Temperatursensor
-#define temperatureInputPin A0
+#define temperatureInputPin A2
 
 // Der Helligkeitssensor
 #define brightnessInputPin  A3
+
+// Die Taster
+#define minusAndMinutePin 5
+#define plusAndHourPin 6
+#define modePin 7
 
 // Ueber die Wire-Library festgelegt:
 // Arduino analog input 4 = I2C SDA

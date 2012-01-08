@@ -13,7 +13,11 @@
 #ifndef TIMESTAMP_H
 #define TIMESTAMP_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "MyDCF77.h"
 #include "DS1307.h"
 

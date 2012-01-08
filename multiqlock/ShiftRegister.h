@@ -17,7 +17,11 @@
 #ifndef SHIFTREGISTER_H
 #define SHIFTREGISTER_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 
 #define SHIFTREGISTER_TURBO
 

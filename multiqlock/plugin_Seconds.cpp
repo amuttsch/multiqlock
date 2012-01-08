@@ -10,20 +10,16 @@
 #include "plugin_Seconds.h"
 #include "ClockHandler.h"
 #include "DisplayMatrix.h"
-#include "Zahlen.h"
+#include "outputObjects.h"
+#include "Global.h"
 
-int Seconds_matrixX;
-int Seconds_matrixY;
 byte Seconds_hours;
 byte Seconds_min;
 byte Seconds_sec;
 
 // Initialisierung der Sekundenuhr
-void initSeconds(int x, int y)
+void initSeconds()
 {
-  Seconds_matrixX = x;
-  Seconds_matrixY = y;
-  
   return;
 }
 

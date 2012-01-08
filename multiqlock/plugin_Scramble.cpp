@@ -9,46 +9,35 @@
  */
 #include "plugin_Scramble.h"
 #include "DisplayMatrix.h"
+#include "Global.h"
 
-int Scramble_matrixX;
-int Scramble_matrixY;
-
-int count;
+word tmpMatrix[MATRIX_ROWS];
 
 // Initialisierung
-void initScramble(int x, int y)
-{
-  Scramble_matrixX = x;
-  Scramble_matrixY = y;
-  count = 0;
-  
+void initScramble()
+{  
   return;
 }
 
 // Update
 void updateScramble(int timeDiff)
 {
-  count += timeDiff;
+  for (int i = 0; i < MATRIX_ROWS; i++) 
+  {
+    tmpMatrix[i] = random(65536);
+  }
+  
   return;
 }
   
 // Anzeigefunktion
 void showScramble()
-{ 
-  // nur alle 1 sek updaten
-  if (count < 1000)
-  {
-    writeMatrix();
-    return;
-  }
-  
+{
   clearMatrix();
-  
-  count = 0;
-  byte matrixSize = getMatrixSize(); 
-  for (int i = 0; i < matrixSize; i++) 
+
+  for (int i = 0; i < MATRIX_ROWS; i++) 
   {
-    setMatrix(i, random(65536));
+    setMatrix(i, tmpMatrix[i]);
   }
   
   // Die Matrix auf die LEDs multiplexen

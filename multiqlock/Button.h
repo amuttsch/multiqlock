@@ -10,13 +10,18 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 
 /**
  * Die Tasten
  */
 #define BUTTON1 1
 #define BUTTON2 2
+#define BUTTONM 3
 
 class Button {
 public:
@@ -27,6 +32,7 @@ public:
 private:
   int _pin;
   unsigned long _lastPressTime;
+  boolean _buttonPressed;
 };
 
 #endif

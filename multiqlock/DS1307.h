@@ -13,7 +13,15 @@
 #ifndef DS1307_H
 #define DS1307_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+  #define Wire_read(a) Wire.read(a)
+  #define Wire_write(a) Wire.write(a)  
+#else
+  #define Wire_read(a) Wire.receive(a)
+  #define Wire_write(a) Wire.send(a)
+  #include "WProgram.h"
+#endif
 
 class DS1307 {
 public:

@@ -10,11 +10,15 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showClock();
-void initClock(int x, int y);
+void initClock();
 void updateClock(int timeDiff);
 void buttonClock(Button btn, byte id);
 

@@ -10,18 +10,29 @@
 #ifndef DISPLAYMATRIX_H
 #define DISPLAYMATRIX_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 
-void initMatrix(int x, int y);
+void initMatrix();
 void setMatrix(char y, word data);
 void setLED(int x, int y);
 void setMatrixOr(char y, word data);
 void writeLine(int x0, int y0, int x1, int y1);
 word getMatrix(char y);
-word* getMatrixPtr();
 void writeMatrix();
-byte getMatrixSize();
 void clearMatrix();
+int getBrightnessLo();
+int getBrightnessHi();
+void setBrightnessLo(int value);
+void setBrightnessHi(int value);
+void overrideBrightness(int value);
+// Nach dem Moduswechsel wieder ein LDR update anfordern
+void forceLDRupdate();
+void iProcess();
+boolean validateXY(int x, int y);
 
 #endif
 

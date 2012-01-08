@@ -16,8 +16,7 @@
  */
 #include "pins_arduino.h"
 #include "ShiftRegister.h"
-
-// #define DEBUG
+#include "Global.h"
 
 /**
  * Initialisierung mit den Pins fuer Serial-Data, Serial-Clock und Store-Clock (Latch)

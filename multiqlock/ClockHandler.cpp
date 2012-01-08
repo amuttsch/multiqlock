@@ -14,8 +14,7 @@
 #include "DS1307.h"
 #include "MyDCF77.h"
 #include "DCF77Helper.h"
-
-#define DEBUG
+#include "Global.h"
 
 /**
  * Die Real-Time-Clock
@@ -87,14 +86,15 @@ void updateClockHandler()
   }
   
   // Status-LEDs ausgeben
-  digitalWrite(dcf77Led, digitalRead(dcf77Signal));
+  digitalWrite(dcf77Led, dcf77.signal());
   digitalWrite(rtcSQWLed, digitalRead(rtcSQWSignal));
 
   // DCF77-Empfaenger abfragen
-  if(dcf77.poll()) {
-    Serial.print("Captured: ");
-    Serial.println(dcf77.asString());
-
+  if(dcf77.poll()) 
+  {
+    /*logDebug("Captured: ");
+    logAppend(dcf77.asString());*/
+  
     if(dcf77.getYear() > 2010) {
       dcf77Helper.addSample(dcf77, ds1307);
       // stimmen die Abstaende im Array?
@@ -116,14 +116,11 @@ void updateClockHandler()
         ds1307.setYear(y);
 
         ds1307.writeTime();
-#ifdef DEBUG
-        Serial.println("DCF77-Time written to DS1307.");
-#endif    
+
+        //logDebug("DCF77-Time written to DS1307.");
       } 
       else {
-#ifdef DEBUG
-        Serial.println("DCF77-Time trashed because wrong distances between timestamps.");
-#endif    
+        //logDebug("DCF77-Time trashed because wrong distances between timestamps.");
       }
     }
   }
@@ -231,3 +228,4 @@ byte getYear()
 {
   return ds1307.getYear();
 }
+

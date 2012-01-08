@@ -10,11 +10,15 @@
 #ifndef ALL_H
 #define ALL_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showAll();
-void initAll(int x, int y);
+void initAll();
 void updateAll(int timeDiff);
 void buttonAll(Button btn, byte id);
 

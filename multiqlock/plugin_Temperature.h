@@ -10,11 +10,15 @@
 #ifndef TEMPERATURE_H
 #define TEMPERATURE_H
 
-#include "WProgram.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
 #include "Button.h"
 
 void showTemperature();
-void initTemperature(int x, int y);
+void initTemperature();
 void updateTemperature(int timeDiff);
 void buttonTemperature(Button btn, byte id);
 

@@ -12,8 +12,7 @@
  */
 #include <Wire.h> // Wire library fuer I2C
 #include "DS1307.h"
-
-// #define DEBUG
+#include "Global.h"
 
 /**
  * Initialisierung mit der Adresse der DS1307
@@ -28,15 +27,15 @@ DS1307::DS1307(int address) {
 void DS1307::readTimeOnly() {
   // Reset the register pointer
   Wire.beginTransmission(_address);
-  Wire.send(0x00);
+  Wire_write((uint8_t)0x00);
   Wire.endTransmission();
   // Statt 7 nur einen Teil ermitteln, Datum wird aktuell nicht benötigt
   Wire.requestFrom(_address, 3);
 
   // A few of these need masks because certain bits are control bits
-  _seconds = bcdToDec(Wire.receive() & 0x7f);
-  _minutes = bcdToDec(Wire.receive());
-  _hours = bcdToDec(Wire.receive() & 0x3f); // Need to change this if 12 hour am/pm
+  _seconds = bcdToDec(Wire_read() & 0x7f);
+  _minutes = bcdToDec(Wire_read());
+  _hours = bcdToDec(Wire_read() & 0x3f); // Need to change this if 12 hour am/pm
 
   _dayOfWeek = 0;
   _date = 0;
@@ -55,16 +54,16 @@ void DS1307::readTimeOnly() {
  */
 void DS1307::writeTime() {
   Wire.beginTransmission(_address);
-  Wire.send(0x00); // 0 to bit 7 starts the clock
-  Wire.send(decToBcd(_seconds));
-  Wire.send(decToBcd(_minutes));
-  Wire.send(decToBcd(_hours)); // If you want 12 hour am/pm you need to set
+  Wire_write((uint8_t)0x00); // 0 to bit 7 starts the clock
+  Wire_write(decToBcd(_seconds));
+  Wire_write(decToBcd(_minutes));
+  Wire_write(decToBcd(_hours)); // If you want 12 hour am/pm you need to set
   // bit 6 (also need to change readDateDs1307)
-  Wire.send(decToBcd(_dayOfWeek));
-  Wire.send(decToBcd(_date));
-  Wire.send(decToBcd(_month));
-  Wire.send(decToBcd(_year));
-  Wire.send(0b00010000); // 1Hz Rechteck auf SQW fuer den Display-Update-Interrupt...
+  Wire_write(decToBcd(_dayOfWeek));
+  Wire_write(decToBcd(_date));
+  Wire_write(decToBcd(_month));
+  Wire_write(decToBcd(_year));
+  Wire_write(0b00010000); // 1Hz Rechteck auf SQW fuer den Display-Update-Interrupt...
   Wire.endTransmission();
 }
 
