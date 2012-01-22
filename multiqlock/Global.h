@@ -10,7 +10,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define MQ_VERSION 2.3.1
+#define MQ_VERSION 2.3.3
 
 // ****************************************************************************************************
 // Logging Einstellungen
@@ -53,14 +53,21 @@
 #define MATRIX_COLUMNS 11
 #define MATRIX_ROWS 10
 
-// Wie soll Uhrzeit angezeigt werden: 
+// Wähle hier dein Frontplattenlayout:
 #define DE_DE // DE_DE: ES IST EIN UHR    / ZWANZIG NACH / ZWANZIG VOR
 //#define DE_AT // DE_AT: ES IST PUNKT EINS / ZEHN VOR     / FUENF VOR DREIVIERTEL
 
 // Was für eine Anzeige soll verwendet werden?
 // VIERTEL VOR oder DREIVIERTEL bzw VIERTEL oder VIERTEL NACH
-// Zeile Auskommentieren für VIERTEL VOR
-#define DREIVIERTEL_ANZEIGE
+// Zeilen Auskommentieren für VIERTEL VOR
+// Nur für DE_DE
+#define CLOCK_VIERTEL_ANZEIGE
+#define CLOCK_DREIVIERTEL_ANZEIGE
+
+// Anzeige Zehn vor Halb bzw. Zehn nach Halb anstall Zwanzig vor/nach
+// Nur DE_DE
+//#define CLOCK_ZEHN_VOR_HALB_ANZEIGE
+//#define CLOCK_ZEHN_NACH_HALB_ANZEIGE
 
 // Dieser Schalter stellt die Anzeige auf den Kopf, falls man die Kabel beim Anoden-
 // multiplexer nicht kreuzen moechte.

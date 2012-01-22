@@ -7,7 +7,7 @@
  *           Andreas Muttscheller
  *           Benedikt Gerlich
  *           Bernhard Göberndorfer
- * @version  2.3.1
+ * @version  2.3.3
  * @datum    07.01.2012
  */
  
@@ -20,6 +20,7 @@
 #include "DisplayMatrix.h"
 #include "ClockHandler.h"
 #include "PluginLoader.h"
+#include "SerialHandler.h"
 #include "Global.h"
 #include "Pins.h"
 
@@ -44,9 +45,6 @@
 Button button1(minusAndMinutePin); // (minutes)
 Button button2(plusAndHourPin); // (hours)
 Button modeChangeButton(modePin); // Mode
-
-char incomingChar = 0;	// for incoming serial data
-int mode = 0;
 
 /**
  * Prüfen ob der EEPROM korrekt initialisiert ist. Ggf. initialisieren
@@ -77,7 +75,7 @@ void setup()
   // Serielle Übertragung immer starten, wegen Moduswechsel über den seriellen Eingang
   Serial.begin(57600);
   #ifdef DEBUG
-    Serial.println("QlockTwo - Multiqlock v");
+    Serial.print("QlockTwo - Multiqlock v");
     Serial.println(MQ_VERSION);
     Serial.println("nice to speak to you... ");
 
@@ -101,6 +99,7 @@ void setup()
   registerPlugin(initClock, updateClock, showClock, buttonClock, 500);
   registerPlugin(initSeconds, updateSeconds, showSeconds, buttonSeconds, 250);
   registerPlugin(initAnalog, updateAnalog, showAnalog, buttonAnalog, 1000);
+  registerPlugin(initAnalog, updateAnalogSnake, showAnalogSnake, buttonAnalog, 1000);
   registerPlugin(initScramble, updateScramble, showScramble, buttonScramble, 750);
   registerPlugin(initBlank, updateBlank, showBlank, buttonBlank, 1000);
   registerPlugin(initAll, updateAll, showAll, buttonAll, 1000);
@@ -123,14 +122,13 @@ void setup()
   initMatrix();
   
   // ggf. letzen Modus laden
+  setCurrentMode(0);
 #ifdef SAVEMODE
-  mode = EEPROM.read(EEPROM_MODE);
+  setCurrentMode(EEPROM.read(EEPROM_MODE));
 #endif
 
-  if(mode >= getPluginCount())
-  {
-      mode = 0;
-  }
+  // Den seriellen Handler initialisieren
+  initSerialHandler();
 }
 
 /**
@@ -140,39 +138,29 @@ void loop()
 {  
   boolean serialModeChange = false;
   // hier werden die Module geupdated
-  callPluginUpdate(mode);
+  callPluginUpdate(getCurrentMode());
   
-  callPluginShow(mode);
+  callPluginShow(getCurrentMode());
+  
+  // Sind Daten auf dem seriellen Bus?
+  if (SerialHandlerIsDataAvailable())
+    SerialHandlerProcessData();
 
   // Taste Minuten++ gedrueckt?
   if (button1.pressed()) {  
-    callPluginButton(mode, button1, BUTTON1);
+    callPluginButton(getCurrentMode(), button1, BUTTON1);
   }
 
   // Taste Stunden++ gedrueckt?
   if (button2.pressed()) {
-    callPluginButton(mode, button2, BUTTON2);
-  }
-
-  // Moduswechsel über Serial
-  if (Serial.available() > 0) {
-		// read the incoming byte:
-		incomingChar = Serial.read();
-		// mit einem kleinen m kann man den Modus wechseln
-		if (incomingChar == 'm')
-		{
-		  serialModeChange = true;
-		}
+    callPluginButton(getCurrentMode(), button2, BUTTON2);
   }
 
   // Taste Moduswechsel gedrueckt?
-  if (modeChangeButton.pressed() || serialModeChange) {
+  if (modeChangeButton.pressed()) {
     // Plugin kann bei Moduswechsel noch Daten sichern (Für Einstellung Hi Lo)
-    callPluginButton(mode, modeChangeButton, BUTTONM);
-    mode++;   
-    if(mode >= getPluginCount()) {
-      mode = 0;
-    }
+    callPluginButton(getCurrentMode(), modeChangeButton, BUTTONM);
+    incCurrentMode();
     
     setUpdateFromRtc(true);
     

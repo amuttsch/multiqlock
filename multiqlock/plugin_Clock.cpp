@@ -92,6 +92,10 @@ void setHoures(int hours, boolean glatt) {
   }
 
 #ifdef DE_DE 
+  if (glatt) {
+    UHR;
+  }
+  
   switch (hours) {
   case 0:
   case 12:
@@ -214,15 +218,11 @@ void setWords(int hours, int minutes) {
     hours -= 12;
   }
 
-
-
 #ifdef DE_DE
   ESIST;
   switch (minutes / 5) {
   case 0:
     // glatte Stunde
-    // VIER UHR
-    UHR;
     setHoures(hours, true);
     break;
   case 1:
@@ -240,7 +240,7 @@ void setWords(int hours, int minutes) {
   case 3:
     // viertel nach
     VIERTEL;
-    #ifndef DREIVIERTEL_ANZEIGE
+    #ifndef CLOCK_VIERTEL_ANZEIGE
       // *** VIERTEL NACH DREI
       NACH;
       setHoures(hours, false);
@@ -252,9 +252,17 @@ void setWords(int hours, int minutes) {
   case 4:
     // 20 nach
     // *** ZANZIG NACH DREI
-    ZWANZIG;
-    NACH;
-    setHoures(hours, false);
+    // oder ZEHN VOR HALB
+    #ifdef CLOCK_ZEHN_VOR_HALB_ANZEIGE
+      ZEHN;
+      VOR;
+      HALB;
+      setHoures(hours + 1, false);
+    #else
+      ZWANZIG;
+      NACH;
+      setHoures(hours, false);
+    #endif
     break;
   case 5:
     // 5 vor halb
@@ -278,15 +286,22 @@ void setWords(int hours, int minutes) {
   case 8:
     // 20 vor
     // *** ZWANZIG VOR VIER
-    ZWANZIG;
-    VOR;
+    // oder ZEHN NACH HALB
+    #ifdef CLOCK_ZEHN_NACH_HALB_ANZEIGE
+      ZEHN;
+      NACH;
+      HALB;
+    #else
+      ZWANZIG;
+      VOR;
+    #endif
     setHoures(hours + 1, false);
     break;
   case 9:
     // viertel vor bzw. dreiviertel
-    #ifdef DREIVIERTEL_ANZEIGE
+    #ifdef CLOCK_DREIVIERTEL_ANZEIGE
       // *** DREIVIERTEL VIER
-      DREIVIERTEL_ANZEIGE;
+      DREIVIERTEL;
     #else
       // *** VIERTEL VOR VIER
       VIERTEL;
@@ -332,16 +347,9 @@ void setWords(int hours, int minutes) {
     setHoures(hours, false);
     break;
   case 3:
-    // viertel nach
     VIERTEL;
-    #ifndef DREIVIERTEL_ANZEIGE
-      // *** VIERTEL NACH DREI
-      NACH;
-      setHoures(hours, false);
-    #else 
-      // *** VIERTEL VIER
-      setHoures(hours + 1, false);
-    #endif
+    // *** VIERTEL VIER
+    setHoures(hours + 1, false);
     break;
   case 4:
     // 20 nach
@@ -375,19 +383,12 @@ void setWords(int hours, int minutes) {
     // *** FUENF VOR DREIVIERTEL VIER
     FUENF;
     VOR;
-    DREIVIERTEL_ANZEIGE;
+    DREIVIERTEL;
     setHoures(hours + 1, false);
     break;
   case 9:
-    // viertel vor bzw. dreiviertel
-    #ifdef DREIVIERTEL_ANZEIGE
-      // *** DREIVIERTEL VIER
-      DREIVIERTEL_ANZEIGE;
-    #else
-      // *** VIERTEL VOR VIER
-      VIERTEL;
-      VOR;
-    #endif
+    // *** DREIVIERTEL VIER
+    DREIVIERTEL;
     setHoures(hours + 1, false);
     break;
   case 10:

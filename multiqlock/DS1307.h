@@ -39,6 +39,8 @@ public:
   void setDate(byte date);
   void setMonth(byte month);
   void setYear(byte year);
+  char* getLastSync();
+  void setLastSync(char* timestamp);
 
   byte getSeconds();
   byte getMinutes();
@@ -61,6 +63,8 @@ private:
 
   byte decToBcd(byte val);
   byte bcdToDec(byte val);   
+  
+  char* _lastSync;
 };
 
 #endif

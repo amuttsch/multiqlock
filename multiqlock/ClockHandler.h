@@ -19,6 +19,7 @@
 void initClockHandler();
 void updateClockHandler();
 void setUpdateFromRtc(boolean update);
+char* getLastSync();
 
 void readTimeOnly();
 void writeTime();

@@ -75,6 +75,7 @@ Features:
 Bugfixes:
 - plugin_Scramble hat geflackert und die LEDs nicht korrekt angesteuert
 
+
 2.3.1
 Features: 
 - DE_AT / DE_DE in Global.h setzbar (thx @ Bernhard Göberndorfer)
@@ -85,4 +86,23 @@ Features:
 Bugfixes:
 - Nach dem Aufruf von SetLDRxx konnte es passieren, dass die Anzeige dunkel blieb
 - Serielle Ausgaben im SetLDR korrigiert
+
+
+2.3.2
+Bugfixes:
+- DREIVIERTEL Anzeige korrigiert (DE_DE & DE_AT)
+- Bei vollen Stunden wurde UHR nicht korrekt angezeugt (DE_DE)
+
+
+2.3.3
+Features:
+- Anzeige für Zehn nach Halb und Zehn vor Halb anstatt zwanzig vor/nach (DE_DE)
+- Separate Einstellung für VIRTEL bzw. DREIVIRTEL Anzeige (DE_DE)
+- PluginHandler umgebaut, sodass dieser den aktuellen Modus als Attribut beinhaltet
+- Der Clockhandler speichert nun den Zeitpunkt der letzten Syncronisierung mit dem DCF77 Modul (thx @ Bernhard Göberndorfer, siehe http://code.google.com/p/multiqlock/issues/detail?id=11)
+- SerialHander: Nun kann die Uhr per Computer gesteuert werden (thx @ Bernhard Göberndorfer, siehe http://code.google.com/p/multiqlock/issues/detail?id=11)
+- plugin_Analog auf v4 geupdatet (thx @ Bernhard Göberndorfer)
+
+Bugfixes:
+- Fixed Issue 9: Anzeige Hi/Lo in SetLDR vertauscht (http://code.google.com/p/multiqlock/issues/detail?id=9)
 

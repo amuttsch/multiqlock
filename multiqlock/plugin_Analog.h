@@ -4,8 +4,8 @@
  *
  * @mc       Arduino/RBBB
  * @autor    Bernhard Göberndorfer
- * @version  2.0
- * @datum    05.01.2012
+ * @version  4.0
+ * @datum    11.01.2012
  */
 #ifndef ANALOG_H
 #define ANALOG_H
@@ -14,9 +14,10 @@
 #include "ClockHandler.h"
 #include "DisplayMatrix.h"
 #include "Global.h"
-#include "outputObjects.h" // Für EckLeds
+#include "outputObjects.h" // definition of CORNER_LEDS
+#include "PluginLoader.h" // forcePluginUpdate() 
 
-// Arduino 1.0 oder aelter?
+// Arduino 1.0 or older?
 #if defined(ARDUINO) && ARDUINO >= 100
   #include "Arduino.h"
 #else
@@ -24,24 +25,24 @@
 #endif
 
 
-// Mitte der Zeiger
+// center of clock hands
 #define ANALOG_CENTER_X (int)(MATRIX_COLUMNS/2)
 #define ANALOG_CENTER_Y (int)(MATRIX_ROWS/2) - 1
 
-// Sekunden als "Snake-Spur" ganz außen anzeigen. 
-// Abstand zu außen: (default=0)
-#define ANALOG_sMARGIN 0
-
-// Länge der Zeiger für minuten und stunden
 #define ANALOG_mLENGTH 5
 #define ANALOG_hLENGTH 3 
 
 void writeSnake (int margin, int currentValue, int maxValue);
 void showAnalog();
+
 void initAnalog();
 void updateAnalog(int timeDiff);
 void buttonAnalog(Button btn, byte id);
 
+void showAnalogSnake();
+void updateAnalogSnake(int timeDiff);
+
 #endif
+
 
 

@@ -50,7 +50,7 @@ void showSetLDRHi()
   clearMatrix();
   for (int i = 0; i < MATRIX_ROWS; i++) 
   {
-    setMatrix(i, hiLo[0][i]); // Anzeige HI/LO getauscht-demnach Anzeige LO! 21.07.11
+    setMatrix(i, hiLo[1][i]); // Anzeige HI/LO getauscht-demnach Anzeige LO! 21.07.11
   }
   
   // Die einzustellende Helligkeit anzeigen
@@ -104,7 +104,7 @@ void showSetLDRLo()
   clearMatrix();
   for (int i = 0; i < MATRIX_ROWS; i++) 
   {
-    setMatrix(i, hiLo[1][i]); // Anzeige HI/LO getauscht-demnach Anzeige HI! 21.07.11
+    setMatrix(i, hiLo[0][i]); // Anzeige HI/LO getauscht-demnach Anzeige HI! 21.07.11
   }
   
   // Die einzustellende Helligkeit anzeigen

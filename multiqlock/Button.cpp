@@ -29,6 +29,11 @@ Button::Button(int pin) {
  * Wurde der Taster gedrueckt?
  */
 boolean Button::pressed() {
+  // Der "imaginäre" Button hat kein Ereigniss pressed. Daher immer false zurückgeben
+  // Für den seriellen Monitor
+  if (_pin == -1)
+    return false;
+    
   boolean retVal = false;
 
   if (digitalRead(_pin) == BUTTON_PRESSED) {

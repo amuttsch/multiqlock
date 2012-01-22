@@ -127,6 +127,14 @@ void DS1307::setYear(byte year) {
   _year = year;
 }
 
+void DS1307::setLastSync(char* timestamp) {
+  _lastSync = timestamp;
+}
+
+char* DS1307::getLastSync() {
+  return _lastSync;
+}
+
 byte DS1307::getSeconds() {
   return _seconds;
 }

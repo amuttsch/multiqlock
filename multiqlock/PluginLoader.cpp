@@ -31,6 +31,9 @@ int lastMillis = 0;
 // Soll ein Update erzwungen werden?
 boolean forceUpdate;
 
+// Akuteller Modus
+int currentMode;
+
 /***
  * Pluginverwaltung
  * Hier sind die Funktionen, die für das Registrieren und Ausführen der der Plugins notwendig sind
@@ -96,3 +99,26 @@ void forcePluginUpdate()
 {
   forceUpdate = true;
 }
+
+// Getter und Setter für den aktuellen Modus
+int getCurrentMode()
+{
+  return currentMode;
+}
+
+void setCurrentMode(int x_mode)
+{
+  currentMode = x_mode;
+  if (currentMode >= pluginCount)
+    currentMode = 0;
+}
+
+// Den aktuellen Modus wechseln
+void incCurrentMode()
+{
+  currentMode++;
+  if (currentMode >= pluginCount)
+    currentMode = 0;
+}
+
+

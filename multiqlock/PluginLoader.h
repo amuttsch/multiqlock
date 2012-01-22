@@ -24,6 +24,9 @@ void callPluginShow(int mode);
 void callPluginButton(int mode, Button btn, byte id);
 int getPluginCount();
 void forcePluginUpdate();
+void setCurrentMode(int x_mode);
+int getCurrentMode();
+void incCurrentMode();
 
 #endif
 

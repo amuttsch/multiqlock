@@ -73,6 +73,8 @@ void initClockHandler()
   // RISING ist einer pro Sekunde, das reicht
   attachInterrupt(0, updateFromRtc, RISING);
   
+  ds1307.setLastSync("no sync yet");
+  
   return;
 }
 
@@ -116,6 +118,9 @@ void updateClockHandler()
         ds1307.setYear(y);
 
         ds1307.writeTime();
+        
+        // Zeitpunkt der letzten Syncronisierung setzen
+        ds1307.setLastSync(dcf77.asString());
 
         //logDebug("DCF77-Time written to DS1307.");
       } 
@@ -227,5 +232,11 @@ byte getMonth()
 byte getYear()
 {
   return ds1307.getYear();
+}
+
+// Zeitpunkt der letzten Syncronisierung
+char* getLastSync()
+{
+    return ds1307.getLastSync();
 }
 
